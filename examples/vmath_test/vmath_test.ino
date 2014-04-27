@@ -8,10 +8,6 @@
 void setup() {
 	Serial.begin(115200);
 	Serial.println("Vector math test");
-}
-
-void loop() {
-	pln("Lets do math again...");
 	test_add();
 	test_sub();
 	test_len();
@@ -19,8 +15,12 @@ void loop() {
 	test_operator_plus();
 	test_operator_minus();
 	test_operator_star();
-	delay(5000);
+
+	test_intersect1();
+	test_intersect2();
 }
+
+void loop() {}
 
 void test_add() {
 	pln("Addition");
@@ -89,4 +89,48 @@ void test_operator_star() {
 	p("a: "); pv(a);
 	p("s: "); pln(s);
 	p("a*s = "); pv((a * s));
+}
+
+void test_intersect1() {
+	pln("Test intesecion 1");
+	vec2 a(0, 0);
+	vec2 b(0, 2);
+	vec2 c(0,0);
+	vec2 d(2,0);
+	vec2 out;
+	bool success = lineSegmentIntersection(a, b, c, d, out);
+	if (success) {
+		p("lineSegmentIntersection expected=(0,0) was="); pv(out);
+	} else {
+		pln("lineSegmentIntersection failed!");
+	}
+
+	success = lineIntersection(a, b, c, d, out);
+	if (success) {
+		p("lineIntersection expected=(0,0) was="); pv(out);
+	} else {
+		pln("lineIntersection failed!");
+	}
+}
+
+void test_intersect2() {
+	pln("Test intesecion 2");
+	vec2 a(-2, -2);
+	vec2 b(4, 4);
+	vec2 c(0, 2);
+	vec2 d(2, 0);
+	vec2 out;
+	bool success = lineSegmentIntersection(a, b, c, d, out);
+	if (success) {
+		p("lineSegmentIntersection expected=(1,1) was="); pv(out);
+	} else {
+		pln("lineSegmentIntersection failed!");
+	}
+
+	success = lineIntersection(a, b, c, d, out);
+	if (success) {
+		p("lineIntersection expected=(1,1) was="); pv(out);
+	} else {
+		pln("lineIntersection failed!");
+	}
 }
